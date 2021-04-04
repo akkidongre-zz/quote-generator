@@ -8,17 +8,24 @@ const copyButton = document.getElementById('copy');
 const quoteButton = document.getElementById('new-quote');
 const loader = document.getElementById('loader');
 const snackbar = document.getElementById('snackbar');
+const leftQuoteIcon = document.getElementById("leftQuoteIcon");
 
 // Get quotes from api
 let apiQuotes = [];
 
 function showLoadingSpinner() {
     loader.hidden = false;
-    quoteContainer.hidden = true;
+    // quoteContainer.hidden = true;
+    leftQuoteIcon.style.display = "none";
+    quoteText.hidden = true;
+    authorText.hidden = true;
 }
 
 function removeLoadingSpinner() {
-    quoteContainer.hidden = false;
+    // quoteContainer.hidden = false;
+    leftQuoteIcon.style.display = "inline-block";
+    quoteText.hidden = false;
+    authorText.hidden = false;
     loader.hidden = true;
 }
 
@@ -42,15 +49,15 @@ function newQuote() {
 }
 
 async function getQuotes() {
-    // showLoadingSpinner();
+    showLoadingSpinner();
     const apiUrl = 'https://type.fit/api/quotes';
     try {
         const response = await fetch(apiUrl);
         apiQuotes = await response.json();
         newQuote();
-        // removeLoadingSpinner();
+        removeLoadingSpinner();
     } catch(err) {
-        // removeLoadingSpinner();
+        removeLoadingSpinner();
         quoteText.textContent = "Some error occured. Please try again later!"
     }
 }
